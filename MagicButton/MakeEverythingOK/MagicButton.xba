@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="MakeEverythingOK" script:language="StarBasic">
+
+
+
+Sub main()
+
+    Dim oProgressBar as Object, oProgressBarModel As Object, oDialog as Object
+    Dim ProgressValue As Long
+
+    DialogLibraries.LoadLibrary(&quot;MakeEverythingOK&quot;)
+    oDialog = CreateUnoDialog( DialogLibraries.MakeEverythingOK.ProgressBarDlg )
+
+
+    Const ProgressValueMin = 0
+    Const ProgressValueMax = 100
+    Const ProgressStep = 1
+
+    oProgressBarModel = oDialog.getModel().getByName( &quot;ProgressBar1&quot; )
+    oProgressBarModel.setPropertyValue( &quot;ProgressValueMin&quot;, ProgressValueMin)
+    oProgressBarModel.setPropertyValue( &quot;ProgressValueMax&quot;, ProgressValueMax)
+    REM show progress bar
+    oDialog.setVisible( True )
+
+    For ProgressValue = ProgressValueMin To ProgressValueMax Step ProgressStep
+        oDialog.Title = &quot;Making everything OK is in progress...  %&quot; &amp; ProgressValue
+        oProgressBarModel.setPropertyValue( &quot;ProgressValue&quot;, ProgressValue )
+        Wait 50
+    Next ProgressValue
+    
+    MsgBox &quot;If everything is still not OK, try checking your settings of perception of objective reality.&quot;, MB_OK, &quot;Everything is OK now&quot;
+
+End Sub
+
+
+</script:module>

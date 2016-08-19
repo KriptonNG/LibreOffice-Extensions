@@ -1,0 +1,3 @@
+Calc bileşeni için TC Kimlik numarası kontrolü yapan eklenti.
+
+Çalıştırmak için Araçlar menüsünden Eklentiler sekmesi altındaki Tc Kimlik No Kontrol seçeneğini seçmeniz yeterli.

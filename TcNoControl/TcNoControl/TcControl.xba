@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="TcNoControl" script:language="StarBasic">
+
+
+
+Function GetCellPositionRow(Cell) as integer
+    oSheet = ThisComponent.getCurrentController().getActiveSheet()
+    oCell = oSheet.getCellRangeByName(Cell)
+    aCellAddress = oCell.getCellAddress()
+    GetCellPositionRow = aCellAddress.Row
+End Function
+
+
+Function GetCellPositionColumn(Cell) as integer
+    oSheet = ThisComponent.getCurrentController().getActiveSheet()
+    oCell = oSheet.getCellRangeByName(Cell)
+    aCellAddress = oCell.getCellAddress()
+    GetCellPositionColumn = aCellAddress.Column
+End Function
+
+
+Function Control(CellRow, CellColumn)
+
+    Dim objActiveSheet as object
+    Dim oCell as object
+    Dim mod1 as Integer, mod2 As Integer 
+    Dim TC1 as Integer, TC2 as Integer, TC3 as Integer, TC4 as Integer, TC5 as Integer, TC6 as Integer, TC7 as Integer, TC8 as Integer, TC9 as Integer, TC10 as Integer, TC11 As Integer
+    objActiveSheet = ThisComponent.getCurrentController().getActiveSheet()
+    oCell = objActiveSheet.getCellByPosition(CellColumn, CellRow)
+    ControlVal = oCell.Value
+    
+    TC1 = Mid(ControlVal, 1, 1)
+    TC2 = Mid(ControlVal, 2, 1)
+    TC3 = Mid(ControlVal, 3, 1)
+    TC4 = Mid(ControlVal, 4, 1)
+    TC5 = Mid(ControlVal, 5, 1)
+    TC6 = Mid(ControlVal, 6, 1)
+    TC7 = Mid(ControlVal, 7, 1)
+    TC8 = Mid(ControlVal, 8, 1)
+    TC9 = Mid(ControlVal, 9, 1)
+    TC10 = Mid(ControlVal, 10, 1)
+    TC11 = Mid(ControlVal, 11, 1)
+    
+    mod1 = ((((TC1 + TC3 + TC5 + TC7 + TC9) * 7) - (TC2 + TC4 + TC6 + TC8)) Mod 10)
+    mod2 = ((TC1 + TC2 + TC3 + TC4 + TC5 + TC6 + TC7 + TC8 + TC9 + TC10) Mod 10)
+    
+    If Len(ControlVal) &lt;&gt; 11 Then
+        oCell.CharColor = RGB(255, 0, 0)
+    Else
+        If mod1 &lt;&gt; TC10 or mod2 &lt;&gt; TC11 Then
+            oCell.CharColor = RGB(255, 0, 0)
+        ElseIf TC11 mod(2) &lt;&gt; 0 Then
+            oCell.CharColor = RGB(255, 0, 0)
+        Else
+            oCell.CharColor = RGB(0, 0, 0)
+        End If
+    End If
+End Function
+
+
+
+Sub TcKimlikKontrol
+
+
+    Dim i as integer
+    Dim oCurrentController as variant
+    Dim oActiveSheet as variant
+    Dim oObj1 as variant
+    Dim aRangeAddress as new com.sun.star.table.CellRangeAddress
+    Dim nEndRow as long
+    Dim target as string
+    Dim colstr as string
+    Dim rawstr as string
+    
+
+    P = &quot;TC Kimlik numaraları hangi s&#252;tunda bulunuyor?&quot;
+    colstr = InputBox(P)
+    P = &quot;TC Kimlik numaraları hangi satırdan itibaren bulunuyor?&quot;
+    rawstr = InputBox(P)
+    target = colstr + rawstr
+    row =GetCellPositionRow(target)
+    col =GetCellPositionColumn(target)
+
+
+
+    oCurrentController = ThisComponent.getCurrentController()
+    oActiveSheet = oCurrentController.getActiveSheet()
+    oObj1 = oActiveSheet.createCursor()
+
+    oObj1.gotoEndOfUsedArea(False)
+    aRangeAddress = oObj1.getRangeAddress()
+    nEndRow = aRangeAddress.EndRow
+
+    for i = row to nEndRow
+        Control(i, col)
+    next i
+
+
+End Sub
+
+
+</script:module>

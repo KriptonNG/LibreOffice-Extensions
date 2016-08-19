@@ -1,0 +1,1 @@
+A tiny extension which copies context of a cell into next one.

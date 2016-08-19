@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006" 
+xmlns:d="http://openoffice.org/extensions/description/2006"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+ 
+  <version value="0.1" />   
+ 
+  <identifier value="com.bureken.MakeEverythingOK" />
+ 
+  <platform value="all" />
+ 
+  <display-name>
+  	<name>Magic Button</name>
+  </display-name>
+
+  <publisher>
+  	<name xlink:href="http://www.berkgureken.com">Berk Gureken</name>
+  </publisher>
+
+  <icon>
+  	<default xlink:href="icons/oksymbol_32.png" />
+  </icon>
+ 
+  <registration>
+      <simple-license accept-by="admin" >
+          <license-text xlink:href="pkg-desc/license.txt" />
+      </simple-license>
+  </registration>
+
+</description>
